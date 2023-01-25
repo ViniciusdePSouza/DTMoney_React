@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, useCallback } from "react";
+import { createContext } from "use-context-selector";
 import { api } from "../lib/axios";
 
 interface Transaction {
@@ -42,10 +43,9 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
         })
 
         setTransactions(response.data)
-
     }
-    
-    async function createNewTransaction(data: CreateNewTransaction) {
+
+    const createNewTransaction = useCallback(async (data: CreateNewTransaction) => {
         const { description, price, category, type } = data
 
         const response = await api.post('/transactions', {
@@ -57,8 +57,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
         })
 
         setTransactions(state => [response.data, ...state])
-    }
-
+    }, [])
 
     useEffect(() => {
         fetchTransactions()
@@ -69,4 +68,8 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
             {children}
         </TransactionsContext.Provider>
     )
+}
+
+function createContextSelector(arg0: TransactionContextType) {
+    throw new Error("Function not implemented.");
 }
