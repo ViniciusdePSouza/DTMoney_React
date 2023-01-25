@@ -1,13 +1,16 @@
 import * as Dialog from '@radix-ui/react-dialog'
 
 import { Overlay, Content, CloseButton, TransactionType, TransactionTypeButton } from './styles'
-import { X } from 'phosphor-react'
+import { AppWindow, X } from 'phosphor-react'
 import { ArrowCircleDown, ArrowCircleUp } from 'phosphor-react'
 
 import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Controller, useForm } from 'react-hook-form'
+import { api } from '../../lib/axios'
+import { useContext } from 'react'
+import { TransactionsContext } from '../../contexts/TransactionContext'
 
 const newTransactionFormSchema = zod.object({
     description: zod.string(),
@@ -16,15 +19,19 @@ const newTransactionFormSchema = zod.object({
     type: zod.enum(['income', 'outcome']),
 })
 
+type NewTransactionData = zod.infer<typeof newTransactionFormSchema>
+
 export function NewTransactionModal() {
-    const { control, register, handleSubmit, formState: { isSubmitting } } = useForm({
+    const { control, register, handleSubmit, formState: { isSubmitting }, reset } = useForm<NewTransactionData>({
         resolver: zodResolver(newTransactionFormSchema),
     })
 
-    async function handleCreateNewTransaction(data) {
-        await new Promise((resolve) => setTimeout(resolve, 2000))
+    const { createNewTransaction } = useContext(TransactionsContext)
 
-        console.log(data)
+    async function handleCreateNewTransaction(data: NewTransactionData) {
+        createNewTransaction(data)
+        
+        reset()
     }
 
     return (
@@ -42,7 +49,7 @@ export function NewTransactionModal() {
                     <Controller
                         control={control}
                         name='type'
-                        render={({field}) => {
+                        render={({ field }) => {
                             return (
                                 <TransactionType onValueChange={field.onChange} value={field.value}>
                                     <TransactionTypeButton variant='income' value='income'>

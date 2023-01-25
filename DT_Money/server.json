@@ -1,20 +1,36 @@
 {
-    "transactions": [
-        {
-            "id":1,
-            "description": "Desenvlvimento de site",
-            "type": "income",
-            "category": "Venda",
-            "price": 14000,
-            "created_at": "2023-01-24T17:53:01.761Z"
-        },
-        {
-            "id":2,
-            "description": "Almoço",
-            "type": "outcome",
-            "category": "Alimentação",
-            "price": 50,
-            "created_at": "2023-01-24T17:53:01.761Z"
-        }
-    ]
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Desenvlvimento de site",
+      "type": "income",
+      "category": "Venda",
+      "price": 14000,
+      "created_at": "2023-01-24T17:53:01.761Z"
+    },
+    {
+      "id": 2,
+      "description": "Almoço",
+      "type": "outcome",
+      "category": "Alimentação",
+      "price": 50,
+      "created_at": "2023-01-24T17:53:01.761Z"
+    },
+    {
+      "description": "Ingresso",
+      "price": 500,
+      "category": "lazer",
+      "type": "outcome",
+      "created_at": "2023-01-25T14:04:03.834Z",
+      "id": 3
+    },
+    {
+      "description": "Viagem Cancún",
+      "price": 2200,
+      "category": "lazer",
+      "type": "outcome",
+      "created_at": "2023-01-25T14:22:46.359Z",
+      "id": 4
+    }
+  ]
 }
